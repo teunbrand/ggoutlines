@@ -1,8 +1,11 @@
 #' Outlined line grob
 #'
+#' Creates a graphical object consisting of outlined lines.
+#'
 #' @inheritParams grid::polylineGrob
 #' @param stroke_lwd Line width of the outline.
-#' @param stroke_col Colour of the
+#' @param stroke_col Colour of the outline.
+#' @param super_id Identifiers of super-groups that share an outline.
 #'
 #' @return A [grid::grobTree] object
 #' @export
@@ -22,37 +25,74 @@ grob_outline_line <- function(
   stroke_col = "black",
   id = NULL,
   id.lengths = NULL,
+  super_id = NULL,
   default.units = "npc",
   arrow = NULL,
   name = NULL,
   gp = gpar(),
   vp = NULL
 ) {
-  # Make foreground
-  fg <- polylineGrob(
-    x = x, y = y, id = id, id.lengths = id.lengths,
-    default.units = default.units, arrow = arrow, name = name,
-    gp = gp
-  )
+
+  id <- standardise_id(id, id.lengths, length(x))
+  uid <- unique(id)
+  suid <- unique(super_id)
+  single <- length(uid) == 1 || length(suid) == 1
 
   stroke_lwd <- stroke_lwd %||% 1
   stroke_col <- stroke_col %||% "black"
 
-  # Early exit when no stroke needs to be drawn
-  if (all(is.na(stroke_col) | stroke_col == 'transparent') ||
-      all(stroke_lwd <= 0)) {
-    return(fg)
+  no_stroke <- all(is.na(stroke_col) | stroke_col == "transparent") ||
+    all(stroke_lwd <= 0)
+
+  # Make foreground
+  if (single || no_stroke) {
+    fg <- polylineGrob(
+      x = x, y = y, id = id,
+      default.units = default.units,
+      arrow = arrow, gp = gp
+    )
+    # Early exit when no stroke needs to be drawn
+    if (no_stroke) {
+      return(fg)
+    }
+  } else {
+    # Instead, make list of line grobs
+    split_var <- if (is.null(super_id)) uid else super_id[!duplicated(id)]
+    fg <- Map(
+      polylineGrob,
+      x = split(x, super_id %||% id), y = split(y, super_id %||% id),
+      id = split(id, super_id %||% id),
+      default.units = default.units,
+      arrow = split_arrow(arrow, suid %||% uid),
+      gp    = split_gp(gp, split_var)
+    )
   }
 
-  # Make background
-  bg <- polylineGrob(
-    x = x, y = y, id = id, id.lengths = id.lengths,
-    default.units = default.units, arrow = arrow, name = name,
-    gp = update_gpar(
-      gp,
-      col = stroke_col,
-      lwd = (gp$lwd %||% 1) + stroke_lwd * 2
-    )
+  # Build stroke gpar
+  stroke_gp <- gpar(
+    col = stroke_col,
+    lwd = (gp$lwd %||% 1) + stroke_lwd * 2
   )
-  grobTree(bg, fg, vp = vp, name = name)
+
+  # Make background
+  if (single) {
+    bg  <- editGrob(fg, gp = stroke_gp, name = paste0(fg$name, "_bg"))
+    if (any(get_alpha(gp$col) != 1)) {
+      bg <- groupGrob(fg, op = "clear", bg)
+    }
+    out <- grobTree(bg, fg, vp = vp, name = name)
+    return(out)
+  }
+  names <- paste0(vapply(fg, `[[`, "", "name"), "_bg")
+
+  bg <- Map(editGrob, grob = fg, gp = split_gp(stroke_gp, split_var),
+            name = names)
+
+  if (any(get_alpha(gp$col) != 1)) {
+    bg <- Map(groupGrob, src = fg, op = "clear", dst = bg)
+  }
+
+  grob <- vec_interleave(bg, fg)
+
+  gTree(children = do.call(gList, grob), vp = vp, name = name)
 }

@@ -88,3 +88,7 @@ standardise_id <- function(id, id.lengths, alt_length) {
   ans <- ans %||% rep(1L, alt_length)
   match(ans, unique(ans))
 }
+
+unique0 <- function(x, ...) if (is.null(x)) x else vec_unique(x, ...)
+
+data_frame0 <- function(...) data_frame(..., .name_repair = "minimal")

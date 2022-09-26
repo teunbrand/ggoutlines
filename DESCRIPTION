@@ -15,6 +15,9 @@ RoxygenNote: 7.2.1
 Depends: 
     ggplot2
 Imports: 
+    cli,
     farver,
     grid,
-    rlang
+    rlang,
+    stats,
+    vctrs

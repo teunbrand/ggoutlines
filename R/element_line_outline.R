@@ -81,6 +81,8 @@ element_grob.element_line_outline <- function(
   gp <- modify_list(element_gp, gp)
 
   st_lwd <- stroke_linewidth %||% element$stroke_linewidth %||% (gp$lwd / .pt)
+  st_col <- stroke_colour %||% element$stroke_colour %||% "black"
+
   grob_outline_line(
     x = x, y = y,
     default.units = default.units,
@@ -88,6 +90,6 @@ element_grob.element_line_outline <- function(
     id.lengths = id.lengths,
     arrow = arrow,
     stroke_lwd = protect0(st_lwd * .pt),
-    stroke_col = stroke_colour %||% element$stroke_colour
+    stroke_col = st_col
   )
 }

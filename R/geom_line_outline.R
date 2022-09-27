@@ -6,6 +6,9 @@
 #' lines have an outline, that can make it easier to discern overlapping lines.
 #'
 #' @inheritParams ggplot2::geom_path
+#' @param by_group A `logical(1)` for setting groupwise outlines. If `TRUE`,
+#'   (default) will draw outlines for individual lines. If `FALSE`, the
+#'   collection of lines as a whole gets an outline.
 #'
 #' @return A `<LayerInstance>` object that can be added to a plot.
 #' @export
@@ -22,6 +25,7 @@ geom_path_outline <- function(
   lineend   = "butt",
   linejoin  = "round",
   linemitre = 10,
+  by_group  = TRUE,
   arrow = NULL,
   na.rm = FALSE,
   show.legend = NA,
@@ -39,6 +43,7 @@ geom_path_outline <- function(
       lineend   = lineend,
       linejoin  = linejoin,
       linemitre = linemitre,
+      by_group  = by_group,
       arrow     = arrow,
       na.rm     = na.rm,
       ...
@@ -54,6 +59,7 @@ geom_line_outline <- function(
   stat     = "identity",
   position = "identity",
   na.rm    = FALSE,
+  by_group = TRUE,
   orientation = NA,
   show.legend = NA,
   inherit.aes = TRUE,
@@ -70,6 +76,7 @@ geom_line_outline <- function(
     params   = list2(
       na.rm  = na.rm,
       orientation = orientation,
+      by_group = by_group,
       ...
     )
   )

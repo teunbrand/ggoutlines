@@ -57,7 +57,8 @@ grob_outline_line <- function(
     }
   } else {
     # Instead, make list of line grobs
-    split_var <- if (is.null(super_id)) uid else super_id[!duplicated(id)]
+    split_var <- if (is.null(super_id)) id else super_id
+    split_var <- split_var[!duplicated(id)]
     fg <- Map(
       polylineGrob,
       x = split(x, super_id %||% id), y = split(y, super_id %||% id),

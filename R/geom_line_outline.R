@@ -208,8 +208,8 @@ GeomPathOutline <- ggproto(
           linejoin  = linejoin,
           linemitre = linemitre
         ),
-        stroke_col = munched$stroke_colour,
-        stroke_lwd = munched$stroke_linewidth
+        stroke_col = munched$stroke_colour[start],
+        stroke_lwd = munched$stroke_linewidth[start]
       )
     }
 

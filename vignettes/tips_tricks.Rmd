@@ -1,0 +1,61 @@
+---
+title: "Tips and tricks"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tips and tricks}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  dev.args = list(png = list(type = "cairo-png"))
+)
+```
+
+```{r setup}
+library(ggoutlines)
+
+lineplot <- ggplot(economics_long, aes(date, value01, colour = variable))
+```
+
+## Stroke colour
+
+Any colour scale is also applicable to the `stroke_colour` aesthetic, if the `aesthetics` argument of the scale includes `"stroke_colour"`. While this generally works fine for legend guides, the `guide_colourbar()` guide also needs an adjusted `available_aes`.
+
+```{r}
+lineplot + 
+  geom_line_outline(aes(stroke_colour = value01)) +
+  scale_colour_viridis_c(
+    aesthetics = "stroke_colour",
+    guide = guide_colourbar(available_aes = "stroke_colour")
+  )
+```
+
+
+
+Matching the stroke colour automatically to the currently active theme:
+
+```{r}
+lineplot +
+  geom_line_outline(
+    stroke_colour = theme_get()$panel.background$fill,
+    stroke_linewidth = 2
+  )
+```
+
+Making stroke colour a darker version of the normal colour.
+
+```{r}
+# Can save as variable to re-use in multiple plots
+dark_outline <- aes(stroke_colour = after_scale(
+  farver::add_to_channel(colour, "l", -30, "hcl"))
+)
+
+lineplot +
+  geom_path_outline(
+    aes(,,!!!dark_outline)
+  )
+```

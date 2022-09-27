@@ -11,6 +11,7 @@ grob_outline_line(
   stroke_col = "black",
   id = NULL,
   id.lengths = NULL,
+  super_id = NULL,
   default.units = "npc",
   arrow = NULL,
   name = NULL,
@@ -25,7 +26,7 @@ grob_outline_line(
 
 \item{stroke_lwd}{Line width of the outline.}
 
-\item{stroke_col}{Colour of the}
+\item{stroke_col}{Colour of the outline.}
 
 \item{id}{A numeric vector used to separate locations in \code{x} and
     \code{y} into multiple lines.  All locations with the same
@@ -34,6 +35,8 @@ grob_outline_line(
 \item{id.lengths}{A numeric vector used to separate locations in \code{x} and
     \code{y} into multiple lines.  Specifies consecutive blocks of
     locations which make up separate lines.}
+
+\item{super_id}{Identifiers of super-groups that share an outline.}
 
 \item{default.units}{A string indicating the default units to use
     if \code{x} or \code{y} are only given as numeric vectors.}
@@ -53,7 +56,7 @@ grob_outline_line(
 A \link[grid:grid.grob]{grid::grobTree} object
 }
 \description{
-Outlined line grob
+Creates a graphical object consisting of outlined lines.
 }
 \examples{
 require(grid)

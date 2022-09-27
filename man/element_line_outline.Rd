@@ -44,5 +44,16 @@ for \code{stroke_colour}.}
 An <element_line_outline> object.
 }
 \description{
-Outlined line theme element
+Theme element for drawing outlined lines. Can be given as some arguments in
+the \code{\link[ggplot2:theme]{ggplot2::theme()}} function.
+}
+\examples{
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  theme(
+    axis.line.x = element_line_outline(
+      "white", linewidth = 1,
+      stroke_colour = "black", stroke_linewidth = 0.5
+    )
+  )
 }

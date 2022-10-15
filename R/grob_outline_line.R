@@ -78,7 +78,7 @@ grob_outline_line <- function(
   # Make background
   if (single) {
     bg  <- editGrob(fg, gp = stroke_gp, name = paste0(fg$name, "_bg"))
-    if (any(get_alpha(gp$col) != 1)) {
+    if (has_alpha(gp$col)) {
       bg <- groupGrob(fg, op = "clear", bg)
     }
     out <- grobTree(bg, fg, vp = vp, name = name)
@@ -89,7 +89,7 @@ grob_outline_line <- function(
   bg <- Map(editGrob, grob = fg, gp = split_gp(stroke_gp, split_var),
             name = names)
 
-  if (any(get_alpha(gp$col) != 1)) {
+  if (has_alpha(gp$col)) {
     bg <- Map(groupGrob, src = fg, op = "clear", dst = bg)
   }
 

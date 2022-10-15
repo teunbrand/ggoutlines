@@ -15,7 +15,18 @@
 #' @eval ggplot2:::rd_aesthetics("geom", "path_outline")
 #'
 #' @examples
-#' NULL
+#' # A standard plot
+#' p <- ggplot(ChickWeight) +
+#'   aes(Time, weight, group = Chick, colour = Diet)
+#'
+#' # Showing outlines makes it easier to distinguish separate trends
+#' p + geom_line_outline()
+#'
+#' # Adapt the stroke to plot background to show 'interrupted' lines
+#' p + geom_line_outline(stroke_colour = "grey92")
+#'
+#' # Alternatively, have all lines as foreground and strokes as background
+#' p + geom_line_outline(by_group = FALSE)
 geom_path_outline <- function(
   mapping   = NULL,
   data      = NULL,

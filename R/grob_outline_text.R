@@ -79,18 +79,13 @@ grob_outline_text <- function(
   # Early exit when only 1 text object is stroked
   if (single) {
     bg  <- strokeGrob(fg, gp = stroke_gp)
-    if (any(get_alpha(gp$col) != 1)) {
-      bg <- groupGrob(fg, op = "clear", bg)
-    }
+    bg  <- clear_grob(bg, fg, gp$col)
     out <- grobTree(bg, fg, vp = vp, name = name)
     return(out)
   }
   # Make list of strokes
   bg <- Map(strokeGrob, x = fg, gp = split_gp(stroke_gp, seq_along(fg)))
-
-  if (any(get_alpha(gp$col) != 1)) {
-    bg <- Map(groupGrob, src = fg, op = "clear", dst = bg)
-  }
+  bg <- clear_grob(bg, fg, gp$col)
 
   # Alternate text and stroked text
   if (!is.null(super_id)) {

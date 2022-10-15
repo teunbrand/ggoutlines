@@ -10,7 +10,28 @@ update_gpar <- function(gp, ...) {
 }
 
 get_alpha <- function(col) {
-  decode_colour(col, alpha = TRUE, na_value = "tranparent")[, "alpha"]
+  decode_colour(col, alpha = TRUE, na_value = "transparent")[, "alpha"]
+}
+
+has_alpha <- function(col) {
+  any(get_alpha(col) != 1)
+}
+
+clear_grob <- function(bg, fg, col, fill = NULL) {
+  if (!(has_alpha(col) || has_alpha(fill))) {
+    return(bg)
+  }
+  if (inherits(bg, "list")) {
+    if (!inherits(fg, "list")) {
+      cli::cli_abort(
+        c("Failed to clear grob.", i = "Probably a programming mistake. Sorry!")
+      )
+    }
+    ans <- Map(groupGrob, src = fg, op = "clear", dst = bg)
+  } else {
+    ans <- groupGrob(src = fg, op = "clear", dst = bg)
+  }
+  return(ans)
 }
 
 protect0 <- function(x) {
@@ -24,17 +45,6 @@ modify_list <- function(old, new) {
     old[[i]] <- new[[i]]
   }
   old
-}
-
-split_gp <- function(gp, i = seq_len(max(lengths(gp)))) {
-  gp[] <- lapply(gp, rep, length.out = max(i))
-  lapply(i, function(j) {
-    do_recycle <- lengths(gp) > 1
-    copy <- gp
-    copy[do_recycle] <- lapply(unclass(copy)[do_recycle], `[`, j)
-    copy[lengths(copy) == 0] <- list(NULL)
-    copy
-  })
 }
 
 split_gp <- function(gp, i = seq_len(max(lengths(gp)))) {
@@ -59,7 +69,8 @@ split_gp <- function(gp, i = seq_len(max(lengths(gp)))) {
     return(constant)
   }
 
-  var <- vec_chop(var, vec_group_loc(i)$loc)
+  loc <- vec_group_loc(i)
+  var <- vec_chop(var, loc$loc)[order(loc$key)]
   lapply(var, function(x) {
     x <- c(unclass(x), constant)
     do.call(gpar, x)

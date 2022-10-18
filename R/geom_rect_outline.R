@@ -176,8 +176,9 @@ GeomRectOutline <- ggproto(
       polys[, c("xmin", "xmax", "ymin", "ymax")] <- NULL
       polys$group <- rep(seq_len(nrow(data)), each = 5)
 
-      grob <- GeomPolygon$draw_panel(
-        polys, panel_params, coord, lineend = lineend, linejoin = linejoin
+      grob <- GeomPolygonOutline$draw_panel(
+        polys, panel_params, coord, lineend = lineend, linejoin = linejoin,
+        by_group = by_group
       )
       return(grob)
     }

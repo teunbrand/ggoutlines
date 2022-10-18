@@ -83,8 +83,11 @@ GeomPolygonOutline <- ggproto(
     stroke_linewidth = 1
   ),
 
-  draw_panel = function(data, panel_params, coord,
-                        rule = "evenodd", by_group = FALSE) {
+  draw_panel = function(
+    data, panel_params, coord,
+    rule = "evenodd", by_group = FALSE,
+    lineend = "butt", linejoin = "roudn", linemitre = 10,
+  ) {
 
     n <- nrow(data)
     if (n == 1) {
@@ -107,7 +110,10 @@ GeomPolygonOutline <- ggproto(
           col  = first_row$colour,
           fill = alpha(first_row$fill, first_row$alpha),
           lwd  = first_row$linewidth * .pt,
-          lty  = first_row$linetype
+          lty  = first_row$linetype,
+          lineend   = lineend,
+          linejoin  = linejoin,
+          linemitre = linemitre
         ),
         stroke_col = first_row$stroke_colour,
         stroke_lwd = first_row$stroke_linewidth * .pt
@@ -131,7 +137,10 @@ GeomPolygonOutline <- ggproto(
           col  = first_row$colour,
           fill = alpha(first_row$fill, first_row$alpha),
           lwd  = first_row$linewidth * .pt,
-          lty  = first_row$linetype
+          lty  = first_row$linetype,
+          lineend   = lineend,
+          linejoin  = linejoin,
+          linemitre = linemitre
         ),
         stroke_col = first_row$stroke_colour,
         stroke_lwd = first_row$stroke_linewidth * .pt

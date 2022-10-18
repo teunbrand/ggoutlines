@@ -9,7 +9,7 @@
 #'   for `stroke_colour`.
 #' @param stroke_linewidth Outline size in millimetres.
 #'
-#' @return An <element_line_outline> object.
+#' @return An `<element_line_outline>` object.
 #' @export
 #'
 #' @examples

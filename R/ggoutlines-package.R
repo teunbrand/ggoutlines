@@ -39,8 +39,10 @@ NULL
 #' @importFrom grid gTree
 #' @importFrom grid pointsGrob
 #' @importFrom grid polylineGrob
+#' @importFrom grid rectGrob
 #' @importFrom grid resolveHJust
 #' @importFrom grid resolveVJust
+#' @importFrom grid roundrectGrob
 #' @importFrom grid strokeGrob
 #' @importFrom grid textGrob
 #' @importFrom rlang %||%

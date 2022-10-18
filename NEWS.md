@@ -11,6 +11,7 @@ New geometry layers (geoms):
 * `geom_bar_outline()`
 * `geom_col_outline()`
 * `geom_histogram_outline()`
+* `geom_polygon_outline()`
 
 New elements:
 
@@ -24,3 +25,4 @@ New graphical objects (grobs):
 * `grob_outline_text()`
 * `grob_outline_points()`
 * `grob_outline_rect()`
+* `grob_outline_polygon()`

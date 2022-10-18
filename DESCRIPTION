@@ -27,3 +27,21 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 LazyData: true
+Collate: 
+    'element_line_outline.R'
+    'element_rect_outline.R'
+    'element_text_outline.R'
+    'geom_rect_outline.R'
+    'geom_bar_outline.R'
+    'geom_line_outline.R'
+    'geom_points_outline.R'
+    'geom_polygon_outline.R'
+    'geom_text_outline.R'
+    'ggoutlines-package.R'
+    'grob_outline_line.R'
+    'grob_outline_points.R'
+    'grob_outline_polygon.R'
+    'grob_outline_rect.R'
+    'grob_outline_text.R'
+    'tetris.R'
+    'utils.R'

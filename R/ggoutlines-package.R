@@ -37,6 +37,7 @@ NULL
 #' @importFrom grid grobTree
 #' @importFrom grid groupGrob
 #' @importFrom grid gTree
+#' @importFrom grid pathGrob
 #' @importFrom grid pointsGrob
 #' @importFrom grid polylineGrob
 #' @importFrom grid rectGrob

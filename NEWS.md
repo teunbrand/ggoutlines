@@ -8,6 +8,9 @@ New geometry layers (geoms):
 * `geom_point_outline()`
 * `geom_rect_outline()`
 * `geom_tile_outline()`
+* `geom_bar_outline()`
+* `geom_col_outline()`
+* `geom_histogram_outline()`
 
 New elements:
 

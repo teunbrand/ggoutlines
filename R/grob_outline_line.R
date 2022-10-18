@@ -53,6 +53,7 @@ grob_outline_line <- function(
     )
     # Early exit when no stroke needs to be drawn
     if (no_stroke) {
+      fg <- editGrob(fg, vp = vp, name = name)
       return(fg)
     }
   } else {
@@ -77,10 +78,8 @@ grob_outline_line <- function(
 
   # Make background
   if (single) {
-    bg  <- editGrob(fg, gp = stroke_gp, name = paste0(fg$name, "_bg"))
-    if (has_alpha(gp$col)) {
-      bg <- groupGrob(fg, op = "clear", bg)
-    }
+    bg <- editGrob(fg, gp = stroke_gp, name = paste0(fg$name, "_bg"))
+    bg <- clear_grob(bg = bg, fg = fg, col = gp$col)
     out <- grobTree(bg, fg, vp = vp, name = name)
     return(out)
   }
@@ -88,10 +87,7 @@ grob_outline_line <- function(
 
   bg <- Map(editGrob, grob = fg, gp = split_gp(stroke_gp, split_var),
             name = names)
-
-  if (has_alpha(gp$col)) {
-    bg <- Map(groupGrob, src = fg, op = "clear", dst = bg)
-  }
+  bg <- clear_grob(bg = bg, fg = fg, col = gp$col)
 
   grob <- vec_interleave(bg, fg)
 

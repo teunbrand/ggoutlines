@@ -42,8 +42,8 @@ grob_outline_points <- function(
 
   lwd_orig <- rep_len(gp$lwd %||% 1, n)
 
-  stroke_lwd <- rep_len(stroke_lwd %||% 1, length(x))
-  stroke_col <- rep_len(stroke_col %||% "black", length(x))
+  stroke_lwd <- rep_len(stroke_lwd %||% 1, n)
+  stroke_col <- rep_len(stroke_col %||% "black", n)
 
   no_stroke <- all(is.na(stroke_col) | stroke_col == "transparent") ||
     all(stroke_lwd <= 0)
@@ -58,6 +58,7 @@ grob_outline_points <- function(
     )
     # Try early exit when there is no stroke
     if (no_stroke) {
+      fg <- editGrob(fg, name = name, vp = vp)
       return(fg)
     }
   } else {

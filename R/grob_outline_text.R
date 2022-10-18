@@ -58,6 +58,7 @@ grob_outline_text <- function(
     )
     # Try early exit when there is no stroke
     if (no_stroke) {
+      fg <- editGrob(fg, name = name, vp = vp)
       return(fg)
     }
   } else {

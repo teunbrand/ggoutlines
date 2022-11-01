@@ -4,9 +4,9 @@
 \name{ggoutlines-package}
 \alias{ggoutlines}
 \alias{ggoutlines-package}
-\title{ggoutlines: What the Package Does (One Line, Title Case)}
+\title{ggoutlines: Outlines for 'ggplot2'}
 \description{
-What the package does (one paragraph).
+A 'ggplot2' extension that provides extra geometry layers (geoms) that place outlines around some well-known geoms. Alongside the geoms, it also provides outlined graphical primitives to work in the 'grid' package.
 }
 \author{
 \strong{Maintainer}: Teun van den Brand \email{tahvdbrand@gmail.com} (\href{https://orcid.org/0000-0002-9335-7468}{ORCID})

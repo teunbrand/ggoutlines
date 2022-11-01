@@ -109,7 +109,7 @@ draw_key_path_outline <- function(data, params, size) {
       col  = alpha(data$colour %||% data$fill %||% "white", data$alpha),
       fill = alpha(params$arrow.fill %||% data$colour %||% data$fill %||%
                      "white", data$alpha),
-      lwd = (data$size %||% 0.5) * .pt,
+      lwd = (data$linewidth %||% 0.5) * .pt,
       lty = data$linetype %||% 1,
       lineend = params$lineend %||% "butt"
     ),
@@ -130,7 +130,7 @@ GeomPathOutline <- ggproto(
 
   default_aes = aes(
     colour    = "white",
-    size      = 0.5,
+    linewidth = 0.5,
     linetype  = 1,
     alpha     = NA,
     stroke_colour = "black",
@@ -159,7 +159,7 @@ GeomPathOutline <- ggproto(
       return(zeroGrob())
     }
 
-    ccols <- c("alpha", "colour", "size", "linetype",
+    ccols <- c("alpha", "colour", "linewidth", "linetype",
                "stroke_colour", "stroke_linewidth")
     attr <- ggplot2:::dapply(muched, "group", function(df) {
       linetype <- unique0(df$linetype)
@@ -201,7 +201,7 @@ GeomPathOutline <- ggproto(
         gp = gpar(
           col  = alpha(munched$colour, munched$alpha)[!end],
           fill = alpha(munched$colour, munched$alpha)[!end],
-          lwd  = munched$size[!end] * .pt,
+          lwd  = munched$linewidth[!end] * .pt,
           lty  = munched$linetype[!end],
           lineend   = lineend,
           linejoin  = linejoin,
@@ -220,7 +220,7 @@ GeomPathOutline <- ggproto(
         gp = gpar(
           col  = alpha(munched$colour, munched$alpha)[start],
           fill = alpha(munched$colour, munched$alpha)[start],
-          lwd  = munched$size[start] * .pt,
+          lwd  = munched$linewidth[start] * .pt,
           lty  = munched$linetype[start],
           lineend   = lineend,
           linejoin  = linejoin,

@@ -86,7 +86,7 @@ GeomPolygonOutline <- ggproto(
   draw_panel = function(
     data, panel_params, coord,
     rule = "evenodd", by_group = FALSE,
-    lineend = "butt", linejoin = "roudn", linemitre = 10,
+    lineend = "butt", linejoin = "round", linemitre = 10
   ) {
 
     n <- nrow(data)

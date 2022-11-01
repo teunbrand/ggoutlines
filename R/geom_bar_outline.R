@@ -90,7 +90,7 @@ geom_col_outline <- function(..., stat = "identity") {
 
 #' @export
 #' @rdname geom_bar_outline
-geom_histogram_outline <- function(..., stat = "bins") {
+geom_histogram_outline <- function(..., stat = "bin") {
   geom_bar_outline(..., stat = stat)
 }
 
